@@ -10,12 +10,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function PwaButton({ variant, label, onSubmit }) {
+export default function PwaButton({ variant, label, onSubmit, color }) {
   const classes = useStyles();
 
   return (
     <div className={classes.root}>
-      <Button variant={variant} color="primary" onClick={onSubmit}>
+      <Button variant={variant} color={color} onClick={onSubmit}>
         {label}
       </Button>
       {/* <Button variant="contained" color="primary" href="#contained-buttons">

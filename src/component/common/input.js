@@ -15,6 +15,7 @@ export default function TestTextField({
   id,
   type,
   label,
+  placeholder,
   value,
   onChange
 }) {
@@ -27,6 +28,7 @@ export default function TestTextField({
           id={id ? id : "filled-name"}
           type={type}
           label={label}
+          placeholder={placeholder}
           value={value}
           onChange={onChange}
           variant="outlined"

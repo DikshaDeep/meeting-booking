@@ -1,6 +1,6 @@
 {
-  "short_name": "Test PWA App",
-  "name": "Test PWA App Sample",
+  "short_name": "Meeting Booking App",
+  "name": "Meeting Booking App",
   "icons": [
     {
       "src": "favicon.ico",
