@@ -6,7 +6,6 @@ export function submitStepOne(data) {
 }
 
 export function SubmitBooking (data) {
-  console.log('step-two..', data)
   return {
     type: 'STEP_TWO_DATA',
     data

@@ -7,18 +7,19 @@ import Button from '../common/button';
 import DropDown from '../common/dropdown';
 import CustomCalender from '../common/calender';
 import { submitStepOne } from '../actions/stepAction';
+import './style.css';
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-    padding: 10
-  },
-  paper: {
-    padding: theme.spacing(2),
-    textAlign: 'center',
-    color: theme.palette.text.secondary,
-  },
-}));
+// const useStyles = makeStyles((theme) => ({
+//   root: {
+//     flexGrow: 1,
+//     padding: 10
+//   },
+//   paper: {
+//     padding: theme.spacing(2),
+//     textAlign: 'center',
+//     color: theme.palette.text.secondary,
+//   },
+// }));
 
 const stepOneForm = (props) => {
   return (
@@ -34,7 +35,7 @@ const stepOneForm = (props) => {
 }
 
 function BookingForm(props) {
-  const classes = useStyles();
+  // const classes = useStyles();
   const [room, setRoom] = React.useState('R1');
   const [name, setName] = React.useState('');
   const [descr, setDescr] = React.useState('');
@@ -66,7 +67,7 @@ function BookingForm(props) {
     props.history.push('step-2');
   }
   return (
-    <div className={classes.root}>
+    <div className='root'>
       <Grid container spacing={3}>
         <Grid item xs={12}>
           <DropDown id='room' label='Meeting Room' value={room} onChange={handleChange} />

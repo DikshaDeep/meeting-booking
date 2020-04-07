@@ -14,11 +14,6 @@ export default function CustomCalender({
   selectedDate,
   handleDateChange
 }) {
-  // The first commit of Material-UI
-  // 
-  // const handleDateChange = (date) => {
-  //   setSelectedDate(date);
-  // };
 
   return (
     <MuiPickersUtilsProvider utils={DateFnsUtils}>
