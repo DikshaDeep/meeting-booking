@@ -9,6 +9,7 @@ import { SubmitBooking } from '../actions/stepAction';
 import { makeApiCall } from '../api/calendarApi';
 import { timing } from '../mock/constant';
 import './style.css';
+import { GOOGLE_API_KEY, CALENDAR_ID, CLIENT_ID } from "../config.js";
 
 const useStyles = makeStyles((theme) => ({
   textField: {
@@ -21,42 +22,40 @@ const useStyles = makeStyles((theme) => ({
 function stepTwo(props) {
   const [selectedTime, setSelectedTime] = React.useState(moment().format('hh:mm'));
   const [selectedEndTime, setSelectedEndTime] = React.useState('');
-  const now = new Date(Date.now() + (30 * 60 * 1000));
-
-  const selectTime = (time) => {
-    setSelectedTime(time.target.value);
-    props.SubmitBooking({time: time.target.value});
+  
+  const selectTime = (e) => {
+    if (e.target.id === 'start-time') {
+      setSelectedTime(e.target.value);
+      props.SubmitBooking({startTime: e.target.value});
+    }
+    if (e.target.id === 'end-time') {
+      setSelectedEndTime(e.target.value);
+      props.SubmitBooking({endtTime: moment(e.target.value).format('hh:mm')});
+    }
+    
   }
+
   const submitBooking = () => {
-    const stepOneData = props.stepOneData;
-    console.log('stepOneDat', stepOneData)
-    var resource = {
-      "summary": "My Event",
+    const {stepOneData}= props.stepOneData;
+   if (stepOneData) {
+    var resource = { 
+      "summary":`Meeting in ${stepOneData.description}`,
       "start": {
-        "dateTime": selectedTime
+        "dateTime": `${moment(stepOneData.date).format('MM/DD/YYYY')} ${selectedTime}`
       },
       "end": {
-        "dateTime": selectedEndTime
+        "dateTime": `${moment(stepOneData.date).format('MM/DD/YYYY')} ${selectedEndTime}`
       },
       "description": stepOneData.description,
-      "location": "US",
-      "attendees": [
-        {
-          "email": "diksha.deep@gmail.com",
-          "displayName": "Jhon",
-          "organizer": true,
-          "self": false,
-          "resource": false,
-          "optional": false,
-          "responseStatus": "needsAction",
-          "comment": "This is my demo event",
-          "additionalGuests": 3
-
-        }
-      ],
+      "location": "IND",
+      "attendees": [],
     };
     makeApiCall(resource);
     alert('submit booking');
+   } else {
+     props.history.push('/')
+   }
+    
   }
   
   const classes = useStyles();
@@ -68,7 +67,7 @@ function stepTwo(props) {
      
       <Grid item xs={12}>
         <TextField
-          id="time"
+          id="start-time"
           label="Start Time"
           type="time"
           onChange={selectTime}
@@ -83,10 +82,10 @@ function stepTwo(props) {
         /></Grid>
         <Grid item xs={12}>
         <TextField
-          id="time"
+          id="end-time"
           label="End Time"
           type="time"
-          onChange={(e) => setSelectedEndTime(moment(e.target.value).format('hh:mm'))}
+          onChange={selectTime}
           defaultValue={selectedEndTime}
           className={classes.textField}
           InputLabelProps={{
