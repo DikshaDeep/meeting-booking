@@ -40,3 +40,14 @@
   font-weight: 400;
   color: grey
 }
+
+.datePicke {
+  padding: 10px;
+}
+
+/* .Mui-focused {
+  color: #b31b1b !important;
+}
+.Mui-focused.Mui-focused.MuiInputBase-formControl {
+  color: #b31b1b !important;
+} */

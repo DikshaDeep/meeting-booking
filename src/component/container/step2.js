@@ -1,32 +1,109 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Grid from '@material-ui/core/Grid';
+import { makeStyles } from '@material-ui/core/styles';
 import { connect } from "react-redux";
+import DateTimePicker from 'react-datetime-picker';
 import Button from '../common/button';
 import { SubmitBooking } from '../actions/stepAction';
+import { getEvents } from '../api/calendarApi';
 
-import { timing } from '../mock/constant';
 import './style.css';
 
+const useStyles = makeStyles((theme) => ({
+  textField: {
+    marginLeft: theme.spacing(1),
+    marginRight: theme.spacing(1),
+    width: 200,
+  },
+}));
+
 function stepTwo(props) {
-  const [selectedTime, setSelectedTime] = React.useState('');
-  const selectTime = (time) => {
-    setSelectedTime(time);
+  const [selectedTime, setSelectedTime] = React.useState(new Date());
+  const [selectedEndTime, setSelectedEndTime] = React.useState(new Date());
+
+  const selectTime = (e) => {
+    setSelectedTime(e);
+
   }
+
+  
+
   const submitBooking = () => {
-    SubmitBooking(selectedTime);
-    alert('submit booking');
+    const { stepOneData } = props.stepOneData;
+    if (stepOneData) {
+      var resource = {
+        "summary": `Meeting in ${stepOneData.room}`,
+        "start": {
+          "dateTime": selectedTime,
+          'timeZone': 'UTC+05:30'
+        },
+        "end": {
+          "dateTime": selectedEndTime,
+          'timeZone': 'UTC+05:30'
+        },
+        "description": stepOneData.description,
+        "location": "IND",
+        "attendees": [],
+      };
+      // makeApiCall(resource);
+      getEvents(resource);
+      alert('submit booking');
+    } else {
+      props.history.push('/')
+    }
+
   }
-  console.log('stepone reducer..', props.stepOneData);
+
+  const classes = useStyles();
   return (
     <div className='root' id='booking'>
       <Grid item xs={12}>
         <h4>Please select your preffered slot</h4>
       </Grid>
-      {timing.map((item, i) => (
-        <div key={i} className='time-selection' onClick={selectTime.bind(this, item)}>
-          <span>{item.time}</span>
-        </div>
-      ))}
+      {/* <Grid item xs={12}>
+        <CustomCalender id='date-picker' label='Select Your Date' handleDateChange={selectTime} selectedDate={selectedDate} />
+      </Grid> */}
+      <Grid item xs={12} className='datePicke'>
+        <span>Start-Time: </span>
+        <DateTimePicker
+          id="start-time"
+          amPmAriaLabel="Select AM/PM"
+          calendarAriaLabel="Toggle calendar"
+          clearAriaLabel="Clear value"
+          dayAriaLabel="Day"
+          hourAriaLabel="Hour"
+          maxDetail="second"
+          minuteAriaLabel="Minute"
+          monthAriaLabel="Month"
+          nativeInputAriaLabel="Date and time"
+          onChange={selectTime}
+          secondAriaLabel="Second"
+          value={selectedTime}
+          yearAriaLabel="Year"
+        />
+      </Grid>
+      <Grid item xs={12} className='datePicke'>
+      <span>End-Time: </span>
+        <DateTimePicker
+          id="start-time"
+          amPmAriaLabel="Select AM/PM"
+          calendarAriaLabel="Toggle calendar"
+          clearAriaLabel="Clear value"
+          dayAriaLabel="Day"
+          hourAriaLabel="Hour"
+          maxDetail="second"
+          minuteAriaLabel="Minute"
+          monthAriaLabel="Month"
+          nativeInputAriaLabel="Date and time"
+          onChange={(e) => setSelectedEndTime(e)}
+          secondAriaLabel="Second"
+          value={selectedEndTime}
+          yearAriaLabel="Year"
+        />
+      </Grid>
+      <Grid>
+        <p>{props.stepOneData?.date}</p>
+      </Grid>
       <Grid item xs={12}>
         <Button id='bookAppointment' label='Book Appointment' onSubmit={submitBooking} />
       </Grid>
