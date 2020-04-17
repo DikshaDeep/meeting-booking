@@ -2,12 +2,12 @@ import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 
 import { Provider } from 'react-redux';
-import configureStore from './component/store';
+import store from './component/store';
 import Grid from '@material-ui/core/Grid';
 import './App.css';
 import Step1 from './component/container/step1';
 import Submit from './component/container/step2';
-const store = configureStore();
+import ListView from './component/container/lists';
 
 function App() {
   return (
@@ -21,6 +21,7 @@ function App() {
           <Switch>
             <Route path="/" component={Step1} exact />
             <Route path="/step-2" component={Submit} />
+            <Route path="/list" component={ListView} />
           </Switch>
         </header>
       </div>
