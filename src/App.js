@@ -8,8 +8,10 @@ import './App.css';
 import Step1 from './component/container/step1';
 import Submit from './component/container/step2';
 import ListView from './component/container/lists';
+import Notification from './component/container/notification';
 
 function App() {
+  
   return (
     <Provider store={store}>
       <div className="App">
@@ -22,6 +24,7 @@ function App() {
             <Route path="/" component={Step1} exact />
             <Route path="/step-2" component={Submit} />
             <Route path="/list" component={ListView} />
+            <Route path="/notification" component={Notification} />
           </Switch>
         </header>
       </div>
